@@ -8,12 +8,16 @@ import {
 } from "@aws-sdk/credential-provider-cognito-identity";
 import { Polly } from "@aws-sdk/client-polly";
 import { getSynthesizeSpeechUrl } from "@aws-sdk/polly-request-presigner";
+import Options from "./components/Options.js"
 import React, { useState } from 'react';
 
 
 function App() {
   const [url, setUrl] = useState("");
-  const [text, setText] = useState("")
+  const [text, setText] = useState("");
+  const [voices, setVoices] = useState([])
+  const language = navigator.languages[0];
+
 
 
   function handleChange(event) {
@@ -58,7 +62,7 @@ function App() {
       document.getElementById('result').innerHTML = err;
     }
   }
-
+console.log(navigator.languages[0])
   return (
     <div className="App">
 
@@ -76,6 +80,9 @@ function App() {
           </form>
         </div>
         < ReactAudioPlayer id="audioPlayback" controls src={url} />
+      </div>
+      <div>
+        <Options />
       </div>
     </div>
   );
