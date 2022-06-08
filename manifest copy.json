@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 4,
 
   "name": "Read Out Loud",
   "description": "Will read your pages",

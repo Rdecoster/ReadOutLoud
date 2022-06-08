@@ -8,12 +8,17 @@ import {
 } from "@aws-sdk/credential-provider-cognito-identity";
 import { Polly } from "@aws-sdk/client-polly";
 import { getSynthesizeSpeechUrl } from "@aws-sdk/polly-request-presigner";
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 
 function App() {
-const [url, setUrl] = useState("");
+  const [url, setUrl] = useState("");
+  const [text, setText] = useState("")
 
+
+  function handleChange(event) {
+    setText(event.target.value);
+  };
   const client = new Polly({
     region: "us-west-2",
     credentials: fromCognitoIdentityPool({
@@ -29,14 +34,15 @@ const [url, setUrl] = useState("");
     engine: 'standard', // standard or neural
     Text: "", // The 'speakText' function supplies this value
     TextType: "text", // For example, "text"
-    VoiceId: "Justin" // For example, "Matthew"
+    VoiceId: "Matthew",
+    SpeachMarkTypes: "word" // For example, "Matthew"
   }
   async function speakText(event) {
     // Update the Text parameter with the text entered by the user
     event.preventDefault();
 
     console.log('run speach')
-    speechParams.Text = 'testing'
+    speechParams.Text = text
     try {
       let url = await getSynthesizeSpeechUrl({
         client, params: speechParams
@@ -64,7 +70,7 @@ const [url, setUrl] = useState("");
           <form onSubmit={speakText}>
             <label>
               Type To synthize:
-              <input type="text" name="name" />
+              <input type="text" name="name" default="enter text here" value={text} onChange={(e) => { handleChange(e) }} />
             </label>
             <input type="submit" value="Submit" className="btn default" />
           </form>
