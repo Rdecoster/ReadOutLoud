@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 
 function TextInput() {
-    
+
     const [text, setText] = useState("")
 
     function handleChange(event) {
@@ -17,10 +17,10 @@ function TextInput() {
     return (
         <div className="TextInput">
             <div id="textToSynth">
-                <form onSubmit={speakText}>
+                <form >
                     <label>
                         Type To synthize:
-                        <input type="text" name="name" default="enter text here" value={text} onChange={(e) => { handleChange(e) }} />
+                        <textarea cols="50" rows="10" name="name" default="enter text here" value={text} onChange={(e) => { handleChange(e) }} />
                     </label>
                     <input type="submit" value="Submit" className="btn default" />
                 </form>

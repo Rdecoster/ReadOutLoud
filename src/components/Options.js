@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
+import ListItems from './ListItems.js'
 
+function TextInput({ voices, language, setLanguage, setVoice }) {
+    console.log(voices, "voices", language, "lanugages")
+    const [languageList, setLanguageList] = useState([])
+    const [voiceList, setVoiceList] = useState([])
 
-function TextInput() {
-
-    const [text, setText] = useState("")
-
-    function handleChange(event) {
+    const handleChange = (event) => {
         console.log("I was clicked")
     };
+    const sortVoices = (language) => (voices) => {
+        let filteredVoices = []
+        let languageHash = {}
+        voices.forEach((voice) => {
+            if (!languageHash[voice.languageCode]) {
+                languageHash[voice.languageCode] = [voice.languageCode, voice.LanguageName]
+            }
+            if (voice.LanguageName = language)
+                filteredVoices.push(voice)
+        })
+        setLanguageList(languageHash.values())
+        setVoiceList(filteredVoices)
+    }
     return (
         <div className="options">
-            <div id="textToSynth">
-                <form>
-                    <label> choose a voice
-                        <select name="default">
-                            <option value="testname">test name</option>
-                        </select>
-                        <br></br>
-
-                    </label>
-                </form>
-            </div>
+            <ListItems label={"Chosse a voice"} options={languageList} />
+            <ListItems label={"choose a language"} options={voiceList} />
         </div>
     );
 }

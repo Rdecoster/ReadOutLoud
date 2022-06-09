@@ -1,22 +1,37 @@
 
 import './App.css';
-import ReactAudioPlayer from 'react-audio-player';
 
 import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
-import {
-  fromCognitoIdentityPool,
-} from "@aws-sdk/credential-provider-cognito-identity";
+import { fromCognitoIdentityPool } from "@aws-sdk/credential-provider-cognito-identity";
 import { Polly } from "@aws-sdk/client-polly";
 import { getSynthesizeSpeechUrl } from "@aws-sdk/polly-request-presigner";
+import ReactAudioPlayer from 'react-audio-player';
 import Options from "./components/Options.js"
-import React, { useState } from 'react';
+import TextInut from "./components/Textnput.js"
+import React, { useState, useEffect } from 'react';
 
 
 function App() {
   const [url, setUrl] = useState("");
   const [text, setText] = useState("");
   const [voices, setVoices] = useState([])
-  const language = navigator.languages[0];
+  const [language, setLanguage] = useState(navigator.language || "en-US")
+  const [voice, setVoice] = useState("")
+  const sampleVoices = [{ 
+    Id: "Matthew",
+    LanguageName: "US English",
+    LanguageCOde: "en-US",
+    Gender: "Male",
+    Name: "Matthew"
+  },
+  { 
+    Id: "Ryan",
+    LanguageName: "US Flemish",
+    LanguageCOde: "Flan",
+    Gender: "Male",
+    Name: "Ryan"
+  }
+]
 
 
 
@@ -41,7 +56,9 @@ function App() {
     VoiceId: "Matthew",
     SpeachMarkTypes: "word" // For example, "Matthew"
   }
-  async function speakText(event) {
+
+
+  const speakText = async (event)=> {
     // Update the Text parameter with the text entered by the user
     event.preventDefault();
 
@@ -61,8 +78,26 @@ function App() {
       console.log("Error catch error !!!!!!!", err);
       document.getElementById('result').innerHTML = err;
     }
-  }
-console.log(navigator.languages[0])
+  };
+
+ useEffect(()=>{
+
+  //  (async () => {
+  //   try {
+  //     let data = await client.describeVoices(language)
+  //     console.log(data, "my data from lang")
+  //     setVoices(data.Voices)
+  //   }
+  //     catch (err) {
+  //       console.log(err)
+  //     }
+  //   })()
+  setVoices(sampleVoices)
+
+  },[])
+  
+
+
   return (
     <div className="App">
 
@@ -82,7 +117,8 @@ console.log(navigator.languages[0])
         < ReactAudioPlayer id="audioPlayback" controls src={url} />
       </div>
       <div>
-        <Options />
+        <Options voices={voices} language={language} setLanguage={setLanguage} setVoice={setVoice}/>
+        <TextInut />
       </div>
     </div>
   );
