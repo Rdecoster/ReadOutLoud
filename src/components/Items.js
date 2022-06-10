@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 
 
-function Items(props) {
+function Items({item, setFunction}) {
 
     const [text, setText] = useState("")
 
     function handleChange(event) {
-        console.log("I was clicked")
+    setFunction(event.target.value)
     };
 
-    console.log("props from items of")
+    
 
     return (
 
-        <option className="options" value="1401644161">
-            Testing
+        <option className="options" value={item[0]}  onChange={handleChange}>
+            {item[0] + " " + item[1]}
             {' '}
         </option>
 

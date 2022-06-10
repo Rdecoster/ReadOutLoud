@@ -14,20 +14,23 @@ import React, { useState, useEffect } from 'react';
 function App() {
   const [url, setUrl] = useState("");
   const [text, setText] = useState("");
-  const [voices, setVoices] = useState([])
-  const [language, setLanguage] = useState(navigator.language || "en-US")
-  const [voice, setVoice] = useState("")
+  const [voices, setVoices] = useState(null)
+  const [language, setLanguage] = useState( "US English")
+  const [voice, setVoice] = useState("Matthew")
+  const [languageArr, setLanguageArr] = useState(null)
+  const [voiceList, setVoiceList] = useState(null)
+  
   const sampleVoices = [{ 
     Id: "Matthew",
     LanguageName: "US English",
-    LanguageCOde: "en-US",
+    LanguageCode: "en-US",
     Gender: "Male",
     Name: "Matthew"
   },
   { 
     Id: "Ryan",
     LanguageName: "US Flemish",
-    LanguageCOde: "Flan",
+    LanguageCode: "Flan",
     Gender: "Male",
     Name: "Ryan"
   }
@@ -56,6 +59,28 @@ function App() {
     VoiceId: "Matthew",
     SpeachMarkTypes: "word" // For example, "Matthew"
   }
+  const sortVoices = (voiceArr) => {
+    console.log(voiceArr,"my array")
+    if (voiceArr === null){
+        return
+    }
+    let filteredVoices = []
+    let languageHash = {}
+    let languageArr =[]
+    voiceArr.forEach((voice) => {
+        if (!languageHash[voice.LanguageName]) {
+            languageHash[voice.LanguageName] = true;
+            languageArr.push([voice.LanguageName, voice.LanguageCode ]);
+        }
+        if (voice.LanguageName === language)
+            filteredVoices.push([voice.Name, voice.Gender]);
+    })
+    console.log(languageArr,"my hash")
+    // setLanguageList()
+    setVoiceList(filteredVoices)
+    setLanguageArr(languageArr)
+    console.log(languageArr,"languge list")
+}
 
 
   const speakText = async (event)=> {
@@ -80,23 +105,24 @@ function App() {
     }
   };
 
+  const hasVoices =  languageArr && voiceList;
+  
  useEffect(()=>{
 
-  //  (async () => {
-  //   try {
-  //     let data = await client.describeVoices(language)
-  //     console.log(data, "my data from lang")
-  //     setVoices(data.Voices)
-  //   }
-  //     catch (err) {
-  //       console.log(err)
-  //     }
-  //   })()
-  setVoices(sampleVoices)
+   (async () => {
+    try {
+      let data = await client.describeVoices(language)
+      console.log(data.Voices, "my data from lang")
+      const voiceData = data.Voices
+      setVoices(voiceData)
+      sortVoices(voiceData)
+    }
+      catch (err) {
+        console.log(err)
+      }
+    })()
 
-  },[])
-  
-
+    },[])
 
   return (
     <div className="App">
@@ -117,7 +143,11 @@ function App() {
         < ReactAudioPlayer id="audioPlayback" controls src={url} />
       </div>
       <div>
-        <Options voices={voices} language={language} setLanguage={setLanguage} setVoice={setVoice}/>
+        {hasVoices
+        ? <Options voices={voiceList} languageArr={languageArr} setLanguage={setLanguage} setVoice={setVoice}/>
+        : <div>Loading Voices</div>
+        }
+       
         <TextInut />
       </div>
     </div>
