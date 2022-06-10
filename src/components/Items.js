@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
 
 
-function Items({item, setFunction}) {
+function Items({item}) {
+  
 
-    const [text, setText] = useState("")
-
-    function handleChange(event) {
-    setFunction(event.target.value)
-    };
-
-    
 
     return (
 
-        <option className="options" value={item[0]}  onChange={handleChange}>
+        <option className="options" value={item[0]} >
             {item[0] + " " + item[1]}
             {' '}
         </option>

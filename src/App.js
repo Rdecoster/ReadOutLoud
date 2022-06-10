@@ -14,11 +14,9 @@ import React, { useState, useEffect } from 'react';
 function App() {
   const [url, setUrl] = useState("");
   const [text, setText] = useState("");
-  const [voices, setVoices] = useState(null)
-  const [language, setLanguage] = useState( "US English")
+  const [data, setData] = useState(null)
   const [voice, setVoice] = useState("Matthew")
-  const [languageArr, setLanguageArr] = useState(null)
-  const [voiceList, setVoiceList] = useState(null)
+
   
   const sampleVoices = [{ 
     Id: "Matthew",
@@ -39,6 +37,7 @@ function App() {
 
 
   function handleChange(event) {
+
     setText(event.target.value);
   };
   const client = new Polly({
@@ -59,30 +58,7 @@ function App() {
     VoiceId: "Matthew",
     SpeachMarkTypes: "word" // For example, "Matthew"
   }
-  const sortVoices = (voiceArr) => {
-    console.log(voiceArr,"my array")
-    if (voiceArr === null){
-        return
-    }
-    let filteredVoices = []
-    let languageHash = {}
-    let languageArr =[]
-    voiceArr.forEach((voice) => {
-        if (!languageHash[voice.LanguageName]) {
-            languageHash[voice.LanguageName] = true;
-            languageArr.push([voice.LanguageName, voice.LanguageCode ]);
-        }
-        if (voice.LanguageName === language)
-            filteredVoices.push([voice.Name, voice.Gender]);
-    })
-    console.log(languageArr,"my hash")
-    // setLanguageList()
-    setVoiceList(filteredVoices)
-    setLanguageArr(languageArr)
-    console.log(languageArr,"languge list")
-}
-
-
+  
   const speakText = async (event)=> {
     // Update the Text parameter with the text entered by the user
     event.preventDefault();
@@ -105,17 +81,16 @@ function App() {
     }
   };
 
-  const hasVoices =  languageArr && voiceList;
+  const hasVoices =  data 
   
  useEffect(()=>{
 
    (async () => {
     try {
-      let data = await client.describeVoices(language)
-      console.log(data.Voices, "my data from lang")
+      let data = await client.describeVoices("en-US")
+      console.log(data.Voices, "from app")
       const voiceData = data.Voices
-      setVoices(voiceData)
-      sortVoices(voiceData)
+      setData(voiceData)
     }
       catch (err) {
         console.log(err)
@@ -144,7 +119,7 @@ function App() {
       </div>
       <div>
         {hasVoices
-        ? <Options voices={voiceList} languageArr={languageArr} setLanguage={setLanguage} setVoice={setVoice}/>
+        ? <Options  voice={voice} data={data} setVoice={setVoice} />
         : <div>Loading Voices</div>
         }
        
