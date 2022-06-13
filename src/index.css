@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.div{
+text: center
+}
+.btnDefault {
+  width: 425px;
+}
+.TextInput{
+  width: 425;
+}
+
+.AudioPlayer{
+  width:425;
+}
