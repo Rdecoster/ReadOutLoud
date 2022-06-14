@@ -1,9 +1,17 @@
 # Read Out Loud Chrome Extension. 
 
 This is a simple Text To Speach aplication design to be a chrome extension. 
-This aplication uses amazon Polly TTS engine to generate the voice for your speach. 
+This aplication uses Amazon Polly. Amazon Polly can use a Neural TTS (NTTS) system that can produce even higher quality voices than its standard voices. The NTTS system produces the most natural and human-like text-to-speech voices possible.
 You will need to have your own AWS account to generate a identity key. 
 
+  
+
+  
+
+
+
+![Alt text](readmeImages/image1.png)
+![Alt text](readmeImages/image2.png?raw=true "Screen shot 2")
 
 ## Loading This APP as a Chrome Extension.
 You will meed.
