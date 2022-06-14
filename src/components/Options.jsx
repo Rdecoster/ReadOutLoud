@@ -4,15 +4,12 @@
 import React, { useState, useEffect } from 'react';
 import ListItem from './ListItem';
 
-// eslint-disable-next-line no-unused-vars
 function Options({
-  // eslint-disable-next-line no-unused-vars
   voice, data, setVoice, setEngine, engine,
 }) {
   const [language, setLanguage] = useState('US English');
   const [voiceArr, setVoiceArr] = useState([]);
   const [languageArr, setLanguageArr] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const voiceEngineArr = [['standard'], ['neural']];
   const sortVoices = (dataInput, selectedLanguage, selectedEngine) => {
     if (dataInput === null) {

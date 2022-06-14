@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable object-shorthand */
 /* eslint-disable max-len */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './App.css';
@@ -30,7 +32,7 @@ function App() {
   const speechParams = {
     OutputFormat: 'mp3', // For example, 'mp3'
     SampleRate: '24000', // For example, '16000
-    engine: 'standard', // standard or neural
+    engine: engine, // standard or neural
     Text: '', // The 'speakText' function supplies this value
     TextType: 'text', // For example, "text"
     VoiceId: voice,
@@ -59,7 +61,6 @@ function App() {
     (async () => {
       try {
         const dataGet = await client.describeVoices('en-US');
-        console.log(dataGet.Voices, 'from app');
         const voiceData = dataGet.Voices;
         setData(voiceData);
       } catch (err) {

@@ -7,14 +7,11 @@ import Items from './Items';
 function ListItems({
   label, options, setFunction, selectedValue,
 }) {
-  // console.log("from list item" ,label, options)
-
   function handleChange(event) {
     setFunction(event.target.value);
   }
 
   const items = options;
-  console.log(items, 'from list items');
 
   return (
     <div>
