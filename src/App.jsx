@@ -15,6 +15,7 @@ function App() {
   const [text, setText] = useState('');
   const [data, setData] = useState(null);
   const [voice, setVoice] = useState('Matthew');
+  const [engine, setEngine] = useState('standard');
 
   const client = new Polly({
     region: 'us-west-2',
@@ -82,7 +83,7 @@ function App() {
       </div>
       <div>
         {hasVoices
-          ? <Options voice={voice} data={data} setVoice={setVoice} />
+          ? <Options voice={voice} data={data} setVoice={setVoice} engine={engine} setEngine={setEngine} />
           : <div>Loading Voices</div>}
 
       </div>

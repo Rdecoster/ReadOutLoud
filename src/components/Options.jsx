@@ -1,13 +1,20 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import ListItem from './ListItem';
 
-function Options({ voice, data, setVoice }) {
+// eslint-disable-next-line no-unused-vars
+function Options({
+  // eslint-disable-next-line no-unused-vars
+  voice, data, setVoice, setEngine, engine,
+}) {
   const [language, setLanguage] = useState('US English');
   const [voiceArr, setVoiceArr] = useState([]);
   const [languageArr, setLanguageArr] = useState([]);
-
-  const sortVoices = (dataInput, selectedLanguage) => {
+  // eslint-disable-next-line no-unused-vars
+  const voiceEngineArr = [['standard'], ['neural']];
+  const sortVoices = (dataInput, selectedLanguage, selectedEngine) => {
     if (dataInput === null) {
       return;
     }
@@ -19,8 +26,8 @@ function Options({ voice, data, setVoice }) {
         languageHash[voiceItem.LanguageName] = true;
         langArr.push([voiceItem.LanguageName, voiceItem.LanguageCode]);
       }
-      if (voiceItem.LanguageName === selectedLanguage) {
-        filteredVoices.push([voiceItem.Name, voiceItem.Gender]);
+      if (voiceItem.LanguageName === selectedLanguage && voiceItem.SupportedEngines.includes(engine)) {
+        filteredVoices.push([voiceItem.Name, voiceItem.Gender, voiceItem.SupportedEngines]);
       }
     });
     // setLanguageList()
@@ -28,13 +35,14 @@ function Options({ voice, data, setVoice }) {
     setLanguageArr(langArr);
   };
   const triggerSort = () => {
-    sortVoices(data, language);
+    sortVoices(data, language, engine);
   };
   useEffect(() => {
     triggerSort();
-  }, [language]);
+  }, [language, engine]);
   return (
     <div className="options">
+      <ListItem label="Voice Engine" options={voiceEngineArr} setFunction={setEngine} selectedValue={engine} />
       <ListItem label="Chosse a voice" options={voiceArr} setFunction={setVoice} selectedValue={voice} />
       <ListItem label="choose a language" options={languageArr} setFunction={setLanguage} selectedValue={language} />
     </div>

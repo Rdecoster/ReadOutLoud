@@ -18,7 +18,7 @@ function ListItems({
 
   return (
     <div>
-      <div id="textToSynth">
+      <div className="textToSynth">
         <form>
           <label>
 
