@@ -26,7 +26,7 @@ To load you aplication into chrome.
 2. From chrome click extension icon.
 3. Navigate to the extension management page.
 4. Click the load unpacked
-5. Navagate to the directoy where you aplication built the aplication you manifiest.json file should be in here. 
+5. Navagate to the directoy where you aplication built the aplication your manifiest.json file should be in here. 
 6. Press the select button. 
 7. The aplication will now appear as an aplication in your chrome extension tab and can run. 
 
