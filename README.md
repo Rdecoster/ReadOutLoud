@@ -3,6 +3,7 @@
 This is a simple Text To Speach aplication design to be a chrome extension. 
 This aplication uses Amazon Polly. Amazon Polly can use a Neural TTS (NTTS) system that can produce even higher quality voices than its standard voices. The NTTS system produces the most natural and human-like text-to-speech voices possible.
 You will need to have your own AWS account to generate a identity key. 
+A Deployed Demo of this aplication can be reached here https://speakit-rd.herokuapp.com/
 
   
 
